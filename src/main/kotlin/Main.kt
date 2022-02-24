@@ -9,19 +9,19 @@ fun main(args: Array<String>) {
 
 
 fun mainMenu() : Int{
-    println("")
-    println("---------------------")
-    println("NOTE KEEPER APP")
-    println("--------------------")
-    println("NOTE MENU")
-    println(" 1) Add a Note")
-    println(" 2) List all Notes")
-    println(" 3) Update a Note")
-    println(" 4) Delete a Node")
-    println("--------------------")
-    println(" 0) Exit")
-    println("--------------------")
-    println("==>> ")
+    """
+          ----------------------------------
+          |        NOTE KEEPER APP         |
+          ----------------------------------
+          | NOTE MENU                      |
+          |   1) Add a note                |
+          |   2) List all notes            |
+          |   3) Update a note             |
+          |   4) Delete a note             |
+          ----------------------------------
+          |   0) Exit                      |
+          ----------------------------------
+          ==>> """
     return scanner.nextInt()
 
 }
@@ -35,7 +35,7 @@ fun runMenu(){
             3 -> updateNotes()
             4 -> deleteNote()
             0 -> exitApp()
-            else -> System.out.println("Invalid option entered: " + option)
+            else -> System.out.println("Invalid option entered: $option ")
         }
 
     }
