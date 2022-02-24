@@ -8,22 +8,21 @@ fun main(args: Array<String>) {
 }
 
 
-fun mainMenu() : Int{
-    """
-          ----------------------------------
-          |        NOTE KEEPER APP         |
-          ----------------------------------
-          | NOTE MENU                      |
-          |   1) Add a note                |
-          |   2) List all notes            |
-          |   3) Update a note             |
-          |   4) Delete a note             |
-          ----------------------------------
-          |   0) Exit                      |
-          ----------------------------------
-          ==>> """
+fun mainMenu() : Int {
+    print(""" 
+         > ----------------------------------
+         > |        NOTE KEEPER APP         |
+         > ----------------------------------
+         > | NOTE MENU                      |
+         > |   1) Add a note                |
+         > |   2) List all notes            |
+         > |   3) Update a note             |
+         > |   4) Delete a note             |
+         > ----------------------------------
+         > |   0) Exit                      |
+         > ----------------------------------
+         > ==>> """.trimMargin(">"))
     return scanner.nextInt()
-
 }
 
 fun runMenu(){
