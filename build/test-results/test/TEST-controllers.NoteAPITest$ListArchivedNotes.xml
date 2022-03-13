@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="controllers.NoteAPITest$ListArchivedNotes" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-10T11:51:26" hostname="LAPTOP-JCT7DJ1T" time="0.092">
+  <properties/>
+  <testcase name="listAllNotes returns Notes when ArrayList has notes stored but no active()" classname="controllers.NoteAPITest$ListArchivedNotes" time="0.092"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
