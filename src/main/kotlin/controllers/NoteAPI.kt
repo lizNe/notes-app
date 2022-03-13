@@ -38,31 +38,86 @@ class NoteAPI {
     }
 
     fun listActiveNotes(): String {
-        var active = ""
-        for (i in notes.indices) {
-            if( notes[i].isNoteArchived.not())
-                active += "${i}: ${notes[i]} \n"
+        return if (numberOfActiveNotes() == 0) {
+            "No active notes stored"
+        } else {
+            var listOfActiveNotes = ""
+            for (note in notes) {
+                if (!note.isNoteArchived) {
+                    listOfActiveNotes += "${notes.indexOf(note)}: $note \n"
+                }
+            }
+            listOfActiveNotes
         }
-        return active
     }
 
-
     fun listArchivedNotes(): String {
-            var archived = ""
-            for (i in notes.indices) {
-              if( notes[i].isNoteArchived)
-                archived += "${i}: ${notes[i]} \n"
+        return if (numberOfArchivedNotes() == 0) {
+            "No archived notes stored"
+        } else {
+            var listOfArchivedNotes = ""
+            for (note in notes) {
+                if (note.isNoteArchived) {
+                    listOfArchivedNotes += "${notes.indexOf(note)}: $note \n"
+                }
             }
-        return archived
+            listOfArchivedNotes
         }
+    }
 
     fun numberOfArchivedNotes(): Int {
-        //helper method to determine how many archived notes there are
-        return listArchivedNotes().count()
+        var counter = 0
+        for (note in notes) {
+            if (note.isNoteArchived) {
+                counter++
+            }
+        }
+        return counter
     }
 
     fun numberOfActiveNotes(): Int {
-        //helper method to determine how many active notes there are
-        return listActiveNotes().count()
+        var counter = 0
+        for (note in notes) {
+            if (!note.isNoteArchived) {
+                counter++
+            }
+        }
+        return counter
     }
-}
+
+    fun listNotesBySelectedPriority(priority: Int): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listOfNotes = ""
+            for (i in notes.indices) {
+                if (notes[i].notePriority == priority) {
+                    listOfNotes +=
+                        """$i: ${notes[i]}
+                        """.trimIndent()
+                }
+            }
+            if (listOfNotes.equals("")) {
+                "No notes with priority: $priority"
+            } else {
+                "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
+            }
+        }
+    }
+
+    fun numberOfNotesByPriority(priority: Int): Int {
+        var counter = 0
+        for (note in notes) {
+            if (note.notePriority == priority) {
+                counter++
+            }
+        }
+        return counter
+    }
+
+
+
+
+
+
+    }
