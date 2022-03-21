@@ -103,6 +103,7 @@ class NoteAPI(serializerType: Serializer) {
     }
 
 
+
     fun numberOfNotesByPriority(priority: Int): Int {
        return notes.stream()
            .filter { note:Note -> note.notePriority == priority}
