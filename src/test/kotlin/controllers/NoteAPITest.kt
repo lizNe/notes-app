@@ -93,13 +93,6 @@ class NoteAPITest {
         }
     }
 
-    fun `listActiveNotes returns no active notes stored when ArrayList is empty`() {
-        assertEquals(0, emptyNotes!!.numberOfActiveNotes())
-        assertTrue(
-            emptyNotes!!.listActiveNotes().lowercase().contains("no active notes")
-        )
-    }
-
     @Test
     fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
         assertEquals(3, populatedNotes!!.numberOfActiveNotes())
