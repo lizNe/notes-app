@@ -64,7 +64,7 @@ fun addNote(){
     val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
 
     if (isAdded) {
-        println("Added Successfully")
+        println("Add Successful")
     } else {
         println("Add Failed")
     }
