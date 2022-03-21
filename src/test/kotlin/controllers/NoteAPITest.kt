@@ -316,10 +316,6 @@ class NoteAPITest {
         }
     }
 
-
-
-
-
     }
 
 
