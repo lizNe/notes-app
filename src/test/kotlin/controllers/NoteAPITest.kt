@@ -93,6 +93,7 @@ class NoteAPITest {
         }
     }
 
+
     @Test
     fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
         assertEquals(3, populatedNotes!!.numberOfActiveNotes())
