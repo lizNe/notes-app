@@ -309,6 +309,29 @@ class NoteAPITest {
         }
     }
 
+   @Test
+   fun `search notes by title if that given title exists`() {
+       assertEquals(5, populatedNotes!!.numberOfNotes())
+
+
+//    Searching a populated collection for a full title that exists in the program (case matches exactly)
+       var searchResults = populatedNotes!!.searchByTitle("Code App")
+       assertTrue(searchResults.contains("Code App"))
+       assertFalse(searchResults.contains("Test App"))
+
+//       Searching by partial title that exists in the system ( case matches exactly)
+       searchResults = populatedNotes!!.searchByTitle("App")
+       assertTrue(searchResults.contains("Code App"))
+       assertTrue(searchResults.contains("Test App"))
+       assertFalse(searchResults.contains("Swim - Pool"))
+
+// Searching for a partial title that exists in the system (case doesn't match)
+    searchResults = populatedNotes!!.searchByTitle("ApP")
+       assertTrue(searchResults.contains("Code App"))
+       assertTrue(searchResults.contains("Code App"))
+       assertFalse(searchResults.contains("Swim - Pool"))
+
+   }
     }
 
 
