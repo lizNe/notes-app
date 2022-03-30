@@ -100,7 +100,7 @@ class NoteAPI(serializerType: Serializer) {
      }
  }
 
-    fun listNotesBySelectedCategory(category: String): String {
+ /*   fun listNotesBySelectedCategory(category: String): String {
         return if (notes.isEmpty()) {
             "No notes stored"
         } else {
@@ -119,13 +119,20 @@ class NoteAPI(serializerType: Serializer) {
             }
         }
     }
+*/
 
-    fun listActiveNotes2(): String =
-        if  (numberOfActiveNotes() == 0)  "No active notes stored"
-        else formatListString(notes.filter { note -> !note.isNoteArchived})
-
-
-
+    fun listNotesBySelectedCategory(category: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            if (numberOfNotesByCategory(category) == 0)
+                "no notes for this category"
+            else{
+                formatListString(notes.filter { note -> note.noteCategory==category})
+            }
+        }
+    }
+    
     fun numberOfNotesByPriority(priority: Int): Int =
         notes.count() { note:Note -> note.notePriority == priority}
 
