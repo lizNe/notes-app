@@ -147,6 +147,7 @@ class NoteAPITest {
         assertTrue(priority2String.contains("2"))
     }
 
+
     @Test
     fun `listNotesBySelectedPriority returns all notes that match that priority when notes of that priority exist`() {
         //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
