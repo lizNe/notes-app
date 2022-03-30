@@ -25,7 +25,7 @@ class NoteAPITest {
     private var emptyNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
 
     @BeforeEach
-    fun setup(){
+    fun setup() {
         learnKotlin = Note("Learning Kotlin", 5, "College", false)
         summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
         codeApp = Note("Code App", 4, "Work", true)
@@ -41,7 +41,7 @@ class NoteAPITest {
     }
 
     @AfterEach
-    fun tearDown(){
+    fun tearDown() {
         learnKotlin = null
         summerHoliday = null
         codeApp = null
@@ -127,7 +127,8 @@ class NoteAPITest {
     @Test
     fun `listNotesBySelectedPriority returns No Notes when ArrayList is empty`() {
         assertEquals(0, emptyNotes!!.numberOfNotes())
-        assertTrue(emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
+        assertTrue(
+            emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
         )
     }
 
@@ -163,6 +164,7 @@ class NoteAPITest {
         assertFalse(priority4String.contains("learning kotlin"))
         assertFalse(priority4String.contains("summer holiday"))
     }
+
     @Nested
     inner class DeleteNotes {
 
@@ -186,7 +188,7 @@ class NoteAPITest {
     @Nested
     inner class UpdateNotes {
         @Test
-        fun `updating a note that does not exist returns false`(){
+        fun `updating a note that does not exist returns false`() {
             assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false)))
             assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false)))
             assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false)))
@@ -287,17 +289,18 @@ class NoteAPITest {
             assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
         }
     }
+
     @Nested
     inner class ArchiveNotes {
         @Test
-        fun `archiving a note that does not exist returns false`(){
+        fun `archiving a note that does not exist returns false`() {
             assertFalse(populatedNotes!!.archiveNote(6))
             assertFalse(populatedNotes!!.archiveNote(-1))
             assertFalse(emptyNotes!!.archiveNote(0))
         }
 
         @Test
-        fun `archiving an already archived note returns false`(){
+        fun `archiving an already archived note returns false`() {
             assertTrue(populatedNotes!!.findNote(2)!!.isNoteArchived)
             assertFalse(populatedNotes!!.archiveNote(2))
         }
@@ -347,8 +350,38 @@ class NoteAPITest {
             assertFalse(searchResults.contains("Swim - Pool"))
         }
     }
+
+
+    @Test
+    fun `listNotesBySelectedCategory returns No Notes when ArrayList is empty`() {
+        assertEquals(0, emptyNotes!!.numberOfNotes())
+        assertTrue(
+            emptyNotes!!.listNotesBySelectedCategory("Work").lowercase().contains("no notes")
+        )
     }
 
+    @Test
+    fun `listNotesBySelectedCategory returns no notes when no notes of that Category exist`() {
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val category2String = populatedNotes!!.listNotesBySelectedCategory("Shop").lowercase()
+        assertTrue(category2String.contains("No notes with category"))
+        assertTrue(category2String.contains("Shop"))
+    }
+
+    @Test
+    fun `listNotesBySelectedCategory returns all notes that match that priority when notes of that Category exist`() {
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val category1String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
+        print(category1String)
+        assertTrue(category1String.contains("code app"))
+        assertTrue(category1String.contains("test app"))
+        assertTrue(category1String.contains("2 notes with category"))
+        assertFalse(category1String.contains("swim"))
+        assertFalse(category1String.contains("learning kotlin"))
+        assertFalse(category1String.contains("summer holiday to France"))
+
+    }
+}
 
 
 

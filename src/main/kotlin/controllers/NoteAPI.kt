@@ -67,7 +67,7 @@ class NoteAPI(serializerType: Serializer) {
          notes.count() {note: Note -> !note.isNoteArchived}
 
 
-    fun listNotesBySelectedPriority(priority: Int): String {
+ /*   fun listNotesBySelectedPriority(priority: Int): String {
         return if (notes.isEmpty()) {
             "No notes stored"
         } else {
@@ -87,16 +87,57 @@ class NoteAPI(serializerType: Serializer) {
         }
     }
 
+*/
+    fun listNotesBySelectedPriority(priority: Int): String {
+     return if (notes.isEmpty()) {
+         "No notes stored"
+     } else {
+         if (numberOfNotesByPriority(priority) == 0)
+              "no notes for this priority"
+         else{
+             formatListString(notes.filter { note -> note.notePriority==priority})
+         }
+     }
+ }
+
+    fun listNotesBySelectedCategory(category: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listOfNotes = ""
+            for (i in notes.indices) {
+                if (notes[i].noteCategory == category) {
+                    listOfNotes +=
+                        """$i: ${notes[i]}
+                        """.trimIndent()
+                }
+            }
+            if (listOfNotes.equals("")) {
+                "No notes with category: $category"
+            } else {
+                "${numberOfNotesByCategory(category)} notes with category $category: $listOfNotes"
+            }
+        }
+    }
+
+    fun listActiveNotes2(): String =
+        if  (numberOfActiveNotes() == 0)  "No active notes stored"
+        else formatListString(notes.filter { note -> !note.isNoteArchived})
+
 
 
     fun numberOfNotesByPriority(priority: Int): Int =
         notes.count() { note:Note -> note.notePriority == priority}
 
+    fun numberOfNotesByCategory(category: String): Int =
+        notes.count() { note:Note -> note.noteCategory == category}
+
 
     fun archiveNote(indexToArchive: Int): Boolean {
         if (isValidIndex(indexToArchive)) {
             val noteToArchive = notes[indexToArchive]
-            if (!noteToArchive.isNoteArchived) {
+            if (!noteToArchive.isNoteArchived)
+            {
                 noteToArchive.isNoteArchived = true
                 return true
             }
