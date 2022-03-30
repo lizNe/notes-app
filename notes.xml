@@ -5,18 +5,27 @@
       <notePriority>4</notePriority>
       <noteCategory>Work</noteCategory>
       <isNoteArchived>false</isNoteArchived>
+      <noteContents>Create more testing for test app</noteContents>
+      <noteStatus>todo</noteStatus>
+      <noteDate> 23th February 2022</noteDate>
     </models.Note>
     <models.Note>
       <noteTitle>Swim - Pool</noteTitle>
       <notePriority>3</notePriority>
       <noteCategory>Hobby</noteCategory>
       <isNoteArchived>true</isNoteArchived>
+      <noteContents>Practice the Butterfly Stroke</noteContents>
+      <noteStatus>doing</noteStatus>
+      <noteDate> 7th December 2021</noteDate>
     </models.Note>
     <models.Note>
       <noteTitle>Summer Holiday to France</noteTitle>
       <notePriority>1</notePriority>
       <noteCategory>Holiday</noteCategory>
       <isNoteArchived>false</isNoteArchived>
+      <noteContents>Buy new Clothes and a beret for Holiday</noteContents>
+      <noteStatus>todo</noteStatus>
+      <noteDate> 12th March 2022</noteDate>
     </models.Note>
   </list>
 </object-stream>

@@ -5,7 +5,7 @@ object NoteUtilities {
     //NOTE: JvmStatic annotation means that the categories variable is static (i.e. we can reference it through the class
     //      name; we don't have to create an object of CategoryUtility to use it.
     @JvmStatic
-    val categories = setOf ("Home", "College")  //add more categories in here.
+    val categories = setOf ("Home", "College","Work","Travel","Finances")  //add more categories in here.
 
     @JvmStatic
     fun isValidCategory(categoryToCheck: String?): Boolean {
@@ -25,7 +25,7 @@ object NoteUtilities {
         return numberToCheck in min..max
     }
 
-
+    //utility method to determine if an index is valid in a list.
     @JvmStatic
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)

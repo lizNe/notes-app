@@ -1,6 +1,8 @@
 package controllers
 import models.Note
 import persistence.Serializer
+import utils.NoteUtilities
+import utils.NoteUtilities.isValidListIndex
 
 class NoteAPI(serializerType: Serializer) {
     private var notes = ArrayList<Note>()
@@ -25,6 +27,9 @@ class NoteAPI(serializerType: Serializer) {
             foundNote.noteTitle = note.noteTitle
             foundNote.notePriority = note.notePriority
             foundNote.noteCategory = note.noteCategory
+            foundNote.noteContents = note.noteContents
+            foundNote.noteStatus = note.noteStatus
+            foundNote.noteDate = note.noteDate
             return true
         }
 
@@ -56,10 +61,6 @@ class NoteAPI(serializerType: Serializer) {
         } else null
     }
 
-    //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
-    }
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
@@ -141,7 +142,7 @@ class NoteAPI(serializerType: Serializer) {
 
 
     fun archiveNote(indexToArchive: Int): Boolean {
-        if (isValidIndex(indexToArchive)) {
+        if (isValidListIndex(indexToArchive, notes)) {
             val noteToArchive = notes[indexToArchive]
             if (!noteToArchive.isNoteArchived)
             {

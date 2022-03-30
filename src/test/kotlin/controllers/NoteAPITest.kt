@@ -24,13 +24,19 @@ class NoteAPITest {
     private var populatedNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
     private var emptyNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
 
+
+
+
+//    To get the test working you need to put comma before and after in order for the fields to appear like so... ,noteContents, and then the field will automatically allow you to enter its value
+//    Got stuck on that for a while... ,isNoteArchived, True ,noteContents, "Blah blah" .....
+
     @BeforeEach
     fun setup() {
-        learnKotlin = Note("Learning Kotlin", 5, "College", false)
-        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
-        codeApp = Note("Code App", 4, "Work", true)
-        testApp = Note("Test App", 4, "Work", false)
-        swim = Note("Swim - Pool", 3, "Hobby", true)
+        learnKotlin = Note("Learning Kotlin", 5, "College", false ,"Learn Basic Syntax" , "doing"," 9th March 2022")
+        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false ,"Buy new Clothes and a beret for Holiday" , "todo"," 12th March 2022")
+        codeApp = Note("Code App", 4, "Work", true ,"Resolve bugs and errors in code app" , "done"," 14th January 2022")
+        testApp = Note("Test App", 4, "Work", false ,"Create more testing for test app" , "todo"," 23th February 2022")
+        swim = Note("Swim - Pool", 3, "Hobby", true ,"Practice the Butterfly Stroke" , "doing"," 7th December 2021")
 
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
@@ -55,7 +61,7 @@ class NoteAPITest {
     inner class AddNotes {
         @Test
         fun `adding a Note to a populated list adds to ArrayList`() {
-            val newNote = Note("Study Lambdas", 1, "College", false)
+            val newNote = Note("Study Lambdas", 1, "College", false,"Write down notes and practice how to use the lambdas throughput my other apps" , "done"," 21st March 2022")
             assertEquals(5, populatedNotes!!.numberOfNotes())
             assertTrue(populatedNotes!!.add(newNote))
             assertEquals(6, populatedNotes!!.numberOfNotes())
@@ -64,7 +70,7 @@ class NoteAPITest {
 
         @Test
         fun `adding a Note to an empty list adds to ArrayList`() {
-            val newNote = Note("Study Lambdas", 1, "College", false)
+            val newNote = Note("Study Lambdas", 1, "College", false,"Write down notes and practice how to use the lambdas throughput my other apps" , "done"," 21st March 2022")
             assertEquals(0, emptyNotes!!.numberOfNotes())
             assertTrue(emptyNotes!!.add(newNote))
             assertEquals(1, emptyNotes!!.numberOfNotes())
@@ -189,9 +195,9 @@ class NoteAPITest {
     inner class UpdateNotes {
         @Test
         fun `updating a note that does not exist returns false`() {
-            assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false)))
-            assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false)))
-            assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false)))
+            assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false,"Finish Deadline for Tomorrow" , "done"," 11th April 2021")))
+            assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false,"Buy new work shirt by next week" , "todo"," 30th March 2022")))
+            assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false,"Write 2 week notice. Because I hate this job and will jump off a cliff" , "done"," 27th June 2021")))
         }
 
         @Test
@@ -201,12 +207,23 @@ class NoteAPITest {
             assertEquals("Swim - Pool", populatedNotes!!.findNote(4)!!.noteTitle)
             assertEquals(3, populatedNotes!!.findNote(4)!!.notePriority)
             assertEquals("Hobby", populatedNotes!!.findNote(4)!!.noteCategory)
+            assertEquals(true, populatedNotes!!.findNote(4)!!.isNoteArchived)
+            assertEquals("Practice the Butterfly Stroke", populatedNotes!!.findNote(4)!!.noteContents)
+            assertEquals("doing", populatedNotes!!.findNote(4)!!.noteStatus)
+            assertEquals(" 7th December 2021", populatedNotes!!.findNote(4)!!.noteDate)
+
+
+
+
+
 
             //update note 5 with new information and ensure contents updated successfully
-            assertTrue(populatedNotes!!.updateNote(4, Note("Updating Note", 2, "College", false)))
+            assertTrue(populatedNotes!!.updateNote(4, Note("Updating Note", 2, "College", false,"Prepare for written MCQ exam for next week" , "todo"," 13th March 2022")))
             assertEquals("Updating Note", populatedNotes!!.findNote(4)!!.noteTitle)
             assertEquals(2, populatedNotes!!.findNote(4)!!.notePriority)
             assertEquals("College", populatedNotes!!.findNote(4)!!.noteCategory)
+
+
         }
     }
 
