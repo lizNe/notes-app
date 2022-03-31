@@ -55,6 +55,7 @@ internal class NoteUtilitiesTest {
 
     }
 
+
     @Test
     fun isValidCategoryFalseWhenCategoryDoesNotExist(){
         Assertions.assertFalse(isValidCategory("Hom"))
