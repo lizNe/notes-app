@@ -123,6 +123,7 @@ class NoteAPI(serializerType: Serializer) {
     }
 */
 
+    //    Own Created Functions
     fun listNotesBySelectedCategory(category: String): String {
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -134,12 +135,15 @@ class NoteAPI(serializerType: Serializer) {
             }
         }
     }
-    
-    fun numberOfNotesByPriority(priority: Int): Int =
-        notes.count() { note:Note -> note.notePriority == priority}
 
     fun numberOfNotesByCategory(category: String): Int =
         notes.count() { note:Note -> note.noteCategory == category}
+
+
+
+    fun numberOfNotesByPriority(priority: Int): Int =
+        notes.count() { note:Note -> note.notePriority == priority}
+
 
 
     fun archiveNote(indexToArchive: Int): Boolean {
@@ -176,5 +180,6 @@ class NoteAPI(serializerType: Serializer) {
         notesToFormat
             .joinToString (separator = "\n") { note ->
                 notes.indexOf(note).toString() + ": " + note.toString() }
+
 
     }

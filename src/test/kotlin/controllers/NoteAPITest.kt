@@ -143,7 +143,7 @@ class NoteAPITest {
         //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
         assertEquals(5, populatedNotes!!.numberOfNotes())
         val priority2String = populatedNotes!!.listNotesBySelectedPriority(2).lowercase()
-        assertTrue(priority2String.contains("no notes"))
+        assertTrue(priority2String.contains("no notes for this priority"))
         assertTrue(priority2String.contains("2"))
     }
 
@@ -382,7 +382,7 @@ class NoteAPITest {
     fun `listNotesBySelectedCategory returns no notes when no notes of that Category exist`() {
         assertEquals(5, populatedNotes!!.numberOfNotes())
         val category2String = populatedNotes!!.listNotesBySelectedCategory("Shop").lowercase()
-        assertTrue(category2String.contains("No notes with category"))
+        assertTrue(category2String.contains("no notes for this category"))
         assertTrue(category2String.contains("Shop"))
     }
 
