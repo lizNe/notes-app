@@ -31,8 +31,18 @@ object NoteUtilities {
         return (index >= 0 && index < list.size)
     }
 
+    @JvmStatic
+    val status = setOf ("todo", "doing","done")  //add more status options in here. Status in purple is called from this status = setOf()
 
-
+    @JvmStatic
+    fun isValidStatus(statusToCheck: String?): Boolean {
+        for (status in status) {
+            if (status.equals(statusToCheck, ignoreCase = true)) {
+                return true
+            }
+        }
+        return false
+    }
 
 
 

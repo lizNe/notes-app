@@ -68,6 +68,7 @@ class NoteAPI(serializerType: Serializer) {
          notes.count() {note: Note -> !note.isNoteArchived}
 
 
+
  /*   fun listNotesBySelectedPriority(priority: Int): String {
         return if (notes.isEmpty()) {
             "No notes stored"
