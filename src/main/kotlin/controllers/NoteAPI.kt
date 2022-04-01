@@ -90,6 +90,29 @@ class NoteAPI(serializerType: Serializer) {
     }
 
 */
+    /*   fun listNotesBySelectedCategory(category: String): String {
+           return if (notes.isEmpty()) {
+               "No notes stored"
+           } else {
+               var listOfNotes = ""
+               for (i in notes.indices) {
+                   if (notes[i].noteCategory == category) {
+                       listOfNotes +=
+                           """$i: ${notes[i]}
+                           """.trimIndent()
+                   }
+               }
+               if (listOfNotes.equals("")) {
+                   "No notes with category: $category"
+               } else {
+                   "${numberOfNotesByCategory(category)} notes with category $category: $listOfNotes"
+               }
+           }
+       }
+   */
+
+//    This method has been refactored to make the function contain less code but still work as intended. If the priority choosen by the user matches 0 meaning if no priority
+//    exists in the system that the user has picked "no notes for this priority" is printed else filter the notes that have that priority and print to screen for user
     fun listNotesBySelectedPriority(priority: Int): String {
      return if (notes.isEmpty()) {
          "No notes stored"
@@ -102,28 +125,14 @@ class NoteAPI(serializerType: Serializer) {
      }
  }
 
- /*   fun listNotesBySelectedCategory(category: String): String {
-        return if (notes.isEmpty()) {
-            "No notes stored"
-        } else {
-            var listOfNotes = ""
-            for (i in notes.indices) {
-                if (notes[i].noteCategory == category) {
-                    listOfNotes +=
-                        """$i: ${notes[i]}
-                        """.trimIndent()
-                }
-            }
-            if (listOfNotes.equals("")) {
-                "No notes with category: $category"
-            } else {
-                "${numberOfNotesByCategory(category)} notes with category $category: $listOfNotes"
-            }
-        }
-    }
-*/
+
+    fun numberOfNotesByPriority(priority: Int): Int =
+        notes.count() { note:Note -> note.notePriority == priority}
+
 
     //    Own Created Functions
+    //    This method has been refactored to make the function contain less code but still work as intended. If the category choosen by the user matches 0 meaning if no category
+    //    exists in the system that the user has picked "no notes for this category" is printed else filter the notes that have that category and print to screen for user
     fun listNotesBySelectedCategory(category: String): String {
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -139,7 +148,8 @@ class NoteAPI(serializerType: Serializer) {
     fun numberOfNotesByCategory(category: String): Int =
         notes.count() { note:Note -> note.noteCategory == category}
 
-
+     //   This method has been refactored to make the function contain less code but still work as intended. If the status choosen by the user matches 0 meaning if no status
+    //    exists in the system that the user has picked "no notes for this status" is printed else filter the notes that have that status and print to screen for user
     fun listNotesBySelectedStatus(status: String): String {
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -155,7 +165,8 @@ class NoteAPI(serializerType: Serializer) {
     fun numberOfNotesByStatus(status: String): Int =
         notes.count() { note:Note -> note.noteStatus == status}
 
-
+     //   This method has been refactored to make the function contain less code but still work as intended. If the priority date by the user matches 0 meaning if no date
+    //    exists in the system that the user has picked "no notes for this date" is printed else filter the notes that have that date and print to screen for user
     fun listNotesBySelectedDate(date: String): String {
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -172,11 +183,6 @@ class NoteAPI(serializerType: Serializer) {
         notes.count() { note:Note -> note.noteDate == date}
 
 
-    fun numberOfNotesByPriority(priority: Int): Int =
-        notes.count() { note:Note -> note.notePriority == priority}
-
-
-
     fun archiveNote(indexToArchive: Int): Boolean {
         if (isValidListIndex(indexToArchive, notes)) {
             val noteToArchive = notes[indexToArchive]
@@ -189,6 +195,7 @@ class NoteAPI(serializerType: Serializer) {
         return false
     }
 
+    // searches for notes by NotesTitle and uses the formatListString to print the note in a clean format
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
@@ -208,6 +215,7 @@ class NoteAPI(serializerType: Serializer) {
         serializer.write(notes)
     }
 
+//    This function will format the way the string is printed to te screen so that it is cleaner rather than adding code to format your strings this method is called instead
     fun formatListString(notesToFormat : List<Note>) : String =
         notesToFormat
             .joinToString (separator = "\n") { note ->

@@ -9,3 +9,4 @@ data class Note(var noteTitle: String,
                 var noteDate : String )
 
 
+//3 new fields added noteContents, noteDate and noteStatus

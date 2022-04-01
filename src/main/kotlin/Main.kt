@@ -147,6 +147,8 @@ fun exitApp() {
     exit(0)
 }
 
+//Tries to save the save function in noteAPI. A throw catch is used so if the save() function doesn't work then an error will be thrown that is caught by the system to display
+// "Error writing to file: $e" to the user
 fun save() {
     try {
         noteAPI.store()
@@ -169,6 +171,7 @@ fun archiveNote() {
     }
 }
 
+
 fun searchNotes() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
@@ -179,7 +182,8 @@ fun searchNotes() {
     }
 }
 
-
+//Tries to load the load function in noteAPI. A throw catch is used so if the load() fucntion doesnt work then an error will be thrown that is caught by the system to display
+// "Error reading from file: $e" to the user
 fun load() {
     try {
         noteAPI.load()
@@ -188,14 +192,17 @@ fun load() {
     }
 }
 
+// calls the class noteAPI and calls the function listAllNotes() from this class and will print all the list of notes that are in the system
 fun listAllNotes() {
     println(noteAPI.listAllNotes())
 }
 
+// calls the class noteAPI and calls the function listArchivedNotes() from this class and will print all the archived notes that are in the system
 fun listArchivedNotes() {
     println(noteAPI.listArchivedNotes())
 }
 
+// calls the class noteAPI and calls the function listActiveNotes() from this class and will print all the active notes that are in the system
 fun listActiveNotes() {
     println(noteAPI.listActiveNotes())
 }
