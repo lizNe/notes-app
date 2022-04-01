@@ -1,0 +1,15 @@
+- noteTitle: ergerg
+  notePriority: 1
+  noteCategory: '232323'
+  noteContents: ferf
+  noteStatus: ferfe
+  noteDate: ferfe
+  noteArchived: false
+- !!models.Note
+  noteArchived: false
+  noteCategory: gerg
+  noteContents: '45'
+  noteDate: erg
+  notePriority: 6
+  noteStatus: rge
+  noteTitle: trhr

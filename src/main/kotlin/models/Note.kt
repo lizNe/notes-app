@@ -7,5 +7,5 @@ data class Note(var noteTitle: String,
                 var noteContents : String,
                 var noteStatus : String,
                 var noteDate : String )
-                                            {
-}
+
+

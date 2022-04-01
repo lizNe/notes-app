@@ -1,8 +1,8 @@
 package controllers
 import models.Note
 import persistence.Serializer
-import utils.NoteUtilities
 import utils.NoteUtilities.isValidListIndex
+import utils.NoteUtilities.status
 
 class NoteAPI(serializerType: Serializer) {
     private var notes = ArrayList<Note>()
@@ -140,6 +140,57 @@ class NoteAPI(serializerType: Serializer) {
         notes.count() { note:Note -> note.noteCategory == category}
 
 
+    fun listNotesBySelectedStatus(status: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            if (numberOfNotesByStatus(status) == 0)
+                "no notes for this status"
+            else{
+                formatListString(notes.filter { note -> note.noteStatus==status})
+            }
+        }
+    }
+
+    fun numberOfNotesByStatus(status: String): Int =
+        notes.count() { note:Note -> note.noteStatus == status}
+
+
+    fun listNotesBySelectedDate(date: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            if (numberOfNotesByDate(date) == 0)
+                "no notes for this date"
+            else{
+                formatListString(notes.filter { note -> note.noteDate==date})
+            }
+        }
+    }
+
+    fun numberOfNotesByDate(date: String): Int =
+        notes.count() { note:Note -> note.noteDate == date}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     fun numberOfNotesByPriority(priority: Int): Int =
         notes.count() { note:Note -> note.notePriority == priority}
@@ -161,6 +212,10 @@ class NoteAPI(serializerType: Serializer) {
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
+
+
+
+
 
     fun isValidIndex(index: Int) :Boolean{
         return isValidListIndex(index, notes);
