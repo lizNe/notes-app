@@ -15,20 +15,21 @@ A Sub-Menu was also added for the option <em>List All Notes.</em> When pressed t
 - Persistence such as XML and JSON have been added to load and save files
 - Search Notes by Title functionality added
 - Sub-Menu added for the option - list all notes that can list all notes, - all archived notes and - list all active notes.
+- Using LAMBDAS to refactor code for more effective programming
 
 ## Application
 ![Completed Notes App](https://user-images.githubusercontent.com/78036222/161263064-077c183c-3cbf-426b-a76e-7717034568d5.jpg)
 <br/><br/>
-<br/><br/>
+### Sub-Menu ###
 ![Sub-Menu](https://user-images.githubusercontent.com/78036222/161263214-c6fe5c87-32c1-48c8-a265-554bf7dbd6a0.jpg)
 
 ## Additional Features added
 1. There new additional fields added: <strong>noteContents</strong>, <strong>noteStatus</strong>, <strong>noteDate</strong>
 2. Three new listing and counting methods added: 
 
-    - listNotesBySelectedCategory
-    - listNotesBySelectedStatus
-    - listNotesBySelectedDate
+    - listNotesBySelectedCategory()
+    - listNotesBySelectedStatus()
+    - listNotesBySelectedDate()
 
 3. New Persistence added, [YAML](https://www.redhat.com/en/topics/automation/what-is-yaml)
 4. Utility Class NoteUtilities added for Validation purposes for functions in the program
