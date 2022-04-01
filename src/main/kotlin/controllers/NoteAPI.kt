@@ -1,6 +1,8 @@
 package controllers
 import models.Note
 import persistence.Serializer
+import utils.NoteUtilities.isValidListIndex
+import utils.NoteUtilities.status
 
 class NoteAPI(serializerType: Serializer) {
     private var notes = ArrayList<Note>()
@@ -25,6 +27,9 @@ class NoteAPI(serializerType: Serializer) {
             foundNote.noteTitle = note.noteTitle
             foundNote.notePriority = note.notePriority
             foundNote.noteCategory = note.noteCategory
+            foundNote.noteContents = note.noteContents
+            foundNote.noteStatus = note.noteStatus
+            foundNote.noteDate = note.noteDate
             return true
         }
 
@@ -56,15 +61,12 @@ class NoteAPI(serializerType: Serializer) {
         } else null
     }
 
-    //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
-        return (index >= 0 && index < list.size)
-    }
 
     fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
     fun numberOfActiveNotes(): Int =
          notes.count() {note: Note -> !note.isNoteArchived}
+
 
 
  /*   fun listNotesBySelectedPriority(priority: Int): String {
@@ -121,6 +123,7 @@ class NoteAPI(serializerType: Serializer) {
     }
 */
 
+    //    Own Created Functions
     fun listNotesBySelectedCategory(category: String): String {
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -132,16 +135,50 @@ class NoteAPI(serializerType: Serializer) {
             }
         }
     }
-    
-    fun numberOfNotesByPriority(priority: Int): Int =
-        notes.count() { note:Note -> note.notePriority == priority}
 
     fun numberOfNotesByCategory(category: String): Int =
         notes.count() { note:Note -> note.noteCategory == category}
 
 
+    fun listNotesBySelectedStatus(status: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            if (numberOfNotesByStatus(status) == 0)
+                "no notes for this status"
+            else{
+                formatListString(notes.filter { note -> note.noteStatus==status})
+            }
+        }
+    }
+
+    fun numberOfNotesByStatus(status: String): Int =
+        notes.count() { note:Note -> note.noteStatus == status}
+
+
+    fun listNotesBySelectedDate(date: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            if (numberOfNotesByDate(date) == 0)
+                "no notes for this date"
+            else{
+                formatListString(notes.filter { note -> note.noteDate==date})
+            }
+        }
+    }
+
+    fun numberOfNotesByDate(date: String): Int =
+        notes.count() { note:Note -> note.noteDate == date}
+
+
+    fun numberOfNotesByPriority(priority: Int): Int =
+        notes.count() { note:Note -> note.notePriority == priority}
+
+
+
     fun archiveNote(indexToArchive: Int): Boolean {
-        if (isValidIndex(indexToArchive)) {
+        if (isValidListIndex(indexToArchive, notes)) {
             val noteToArchive = notes[indexToArchive]
             if (!noteToArchive.isNoteArchived)
             {
@@ -155,6 +192,7 @@ class NoteAPI(serializerType: Serializer) {
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
+
 
     fun isValidIndex(index: Int) :Boolean{
         return isValidListIndex(index, notes);
@@ -174,5 +212,6 @@ class NoteAPI(serializerType: Serializer) {
         notesToFormat
             .joinToString (separator = "\n") { note ->
                 notes.indexOf(note).toString() + ": " + note.toString() }
+
 
     }

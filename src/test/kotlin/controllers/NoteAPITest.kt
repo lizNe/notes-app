@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import persistence.JSONSerializer
 import persistence.XMLSerializer
+import utils.NoteUtilities.status
 import java.io.File
 import java.util.*
 import kotlin.test.assertEquals
@@ -24,13 +25,19 @@ class NoteAPITest {
     private var populatedNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
     private var emptyNotes: NoteAPI? = NoteAPI(XMLSerializer(File("notes.xml")))
 
+
+
+
+//    To get the test working you need to put comma before and after in order for the fields to appear like so... ,noteContents, and then the field will automatically allow you to enter its value
+//    Got stuck on that for a while... ,isNoteArchived, True ,noteContents, "Blah blah" .....
+
     @BeforeEach
     fun setup() {
-        learnKotlin = Note("Learning Kotlin", 5, "College", false)
-        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
-        codeApp = Note("Code App", 4, "Work", true)
-        testApp = Note("Test App", 4, "Work", false)
-        swim = Note("Swim - Pool", 3, "Hobby", true)
+        learnKotlin = Note("Learning Kotlin", 5, "College", false ,"Learn Basic Syntax" , "doing"," 9th March 2022")
+        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false ,"Buy new Clothes and a beret for Holiday" , "todo"," 9th March 2022")
+        codeApp = Note("Code App", 4, "Work", true ,"Resolve bugs and errors in code app" , "doing"," 14th January 2022")
+        testApp = Note("Test App", 4, "Work", false ,"Create more testing for test app" , "todo"," 23th February 2022")
+        swim = Note("Swim - Pool", 3, "Hobby", true ,"Practice the Butterfly Stroke" , "doing"," 7th December 2021")
 
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
@@ -55,7 +62,7 @@ class NoteAPITest {
     inner class AddNotes {
         @Test
         fun `adding a Note to a populated list adds to ArrayList`() {
-            val newNote = Note("Study Lambdas", 1, "College", false)
+            val newNote = Note("Study Lambdas", 1, "College", false,"Write down notes and practice how to use the lambdas throughput my other apps" , "done"," 21st March 2022")
             assertEquals(5, populatedNotes!!.numberOfNotes())
             assertTrue(populatedNotes!!.add(newNote))
             assertEquals(6, populatedNotes!!.numberOfNotes())
@@ -64,7 +71,7 @@ class NoteAPITest {
 
         @Test
         fun `adding a Note to an empty list adds to ArrayList`() {
-            val newNote = Note("Study Lambdas", 1, "College", false)
+            val newNote = Note("Study Lambdas", 1, "College", false,"Write down notes and practice how to use the lambdas throughput my other apps" , "done"," 21st March 2022")
             assertEquals(0, emptyNotes!!.numberOfNotes())
             assertTrue(emptyNotes!!.add(newNote))
             assertEquals(1, emptyNotes!!.numberOfNotes())
@@ -137,9 +144,10 @@ class NoteAPITest {
         //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
         assertEquals(5, populatedNotes!!.numberOfNotes())
         val priority2String = populatedNotes!!.listNotesBySelectedPriority(2).lowercase()
-        assertTrue(priority2String.contains("no notes"))
+        assertTrue(priority2String.contains("No notes with priority"))
         assertTrue(priority2String.contains("2"))
     }
+
 
     @Test
     fun `listNotesBySelectedPriority returns all notes that match that priority when notes of that priority exist`() {
@@ -154,15 +162,6 @@ class NoteAPITest {
         assertFalse(priority1String.contains("code app"))
         assertFalse(priority1String.contains("test app"))
 
-
-        val priority4String = populatedNotes!!.listNotesBySelectedPriority(4).lowercase(Locale.getDefault())
-        assertTrue(priority4String.contains("2 note"))
-        assertTrue(priority4String.contains("priority 4"))
-        assertFalse(priority4String.contains("swim"))
-        assertTrue(priority4String.contains("code app"))
-        assertTrue(priority4String.contains("test app"))
-        assertFalse(priority4String.contains("learning kotlin"))
-        assertFalse(priority4String.contains("summer holiday"))
     }
 
     @Nested
@@ -189,9 +188,9 @@ class NoteAPITest {
     inner class UpdateNotes {
         @Test
         fun `updating a note that does not exist returns false`() {
-            assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false)))
-            assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false)))
-            assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false)))
+            assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false,"Finish Deadline for Tomorrow" , "done"," 11th April 2021")))
+            assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false,"Buy new work shirt by next week" , "todo"," 30th March 2022")))
+            assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false,"Write 2 week notice. Because I hate this job and will jump off a cliff" , "done"," 27th June 2021")))
         }
 
         @Test
@@ -201,12 +200,18 @@ class NoteAPITest {
             assertEquals("Swim - Pool", populatedNotes!!.findNote(4)!!.noteTitle)
             assertEquals(3, populatedNotes!!.findNote(4)!!.notePriority)
             assertEquals("Hobby", populatedNotes!!.findNote(4)!!.noteCategory)
+            assertEquals(true, populatedNotes!!.findNote(4)!!.isNoteArchived)
+            assertEquals("Practice the Butterfly Stroke", populatedNotes!!.findNote(4)!!.noteContents)
+            assertEquals("doing", populatedNotes!!.findNote(4)!!.noteStatus)
+            assertEquals(" 7th December 2021", populatedNotes!!.findNote(4)!!.noteDate)
 
             //update note 5 with new information and ensure contents updated successfully
-            assertTrue(populatedNotes!!.updateNote(4, Note("Updating Note", 2, "College", false)))
+            assertTrue(populatedNotes!!.updateNote(4, Note("Updating Note", 2, "College", false,"Prepare for written MCQ exam for next week" , "todo"," 13th March 2022")))
             assertEquals("Updating Note", populatedNotes!!.findNote(4)!!.noteTitle)
             assertEquals(2, populatedNotes!!.findNote(4)!!.notePriority)
             assertEquals("College", populatedNotes!!.findNote(4)!!.noteCategory)
+
+
         }
     }
 
@@ -364,12 +369,12 @@ class NoteAPITest {
     fun `listNotesBySelectedCategory returns no notes when no notes of that Category exist`() {
         assertEquals(5, populatedNotes!!.numberOfNotes())
         val category2String = populatedNotes!!.listNotesBySelectedCategory("Shop").lowercase()
-        assertTrue(category2String.contains("No notes with category"))
+        assertTrue(category2String.contains("no notes for this category"))
         assertTrue(category2String.contains("Shop"))
     }
 
     @Test
-    fun `listNotesBySelectedCategory returns all notes that match that priority when notes of that Category exist`() {
+    fun `listNotesBySelectedCategory returns all notes that match that category when notes of that Category exist`() {
         assertEquals(5, populatedNotes!!.numberOfNotes())
         val category1String = populatedNotes!!.listNotesBySelectedCategory("Work").lowercase()
         print(category1String)
@@ -379,6 +384,73 @@ class NoteAPITest {
         assertFalse(category1String.contains("swim"))
         assertFalse(category1String.contains("learning kotlin"))
         assertFalse(category1String.contains("summer holiday to France"))
+
+    }
+
+    @Test
+    fun `listNotesBySelectedStatus returns No Notes when ArrayList is empty`() {
+        assertEquals(0, emptyNotes!!.numberOfNotes())
+        assertTrue(
+            emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
+        )
+    }
+
+    @Test
+    fun `listNotesBySelectedStatus returns no notes when no notes of that status exist`() {
+        //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val status2String = populatedNotes!!.listNotesBySelectedPriority(2).lowercase()
+        assertTrue(status2String.contains("no notes for this status"))
+        assertTrue(status2String.contains("done"))
+    }
+
+
+    @Test
+    fun `listNotesBySelectedStatus returns all notes that match that status when notes of that status exist`() {
+        //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val status1String = populatedNotes!!.listNotesBySelectedStatus("doing").lowercase()
+        assertTrue(status1String.contains("3 notes"))
+        assertTrue(status1String.contains("status doing"))
+        assertTrue(status1String.contains("learning kotlin"))
+        assertTrue(status1String.contains("code app"))
+        assertTrue(status1String.contains("swim"))
+        assertFalse(status1String.contains("summer holiday to France"))
+        assertFalse(status1String.contains("test app"))
+
+    }
+
+    @Test
+    fun `listNotesBySelectedDate returns No Notes when ArrayList is empty`() {
+        assertEquals(0, emptyNotes!!.numberOfNotes())
+        assertTrue(
+            emptyNotes!!.listNotesBySelectedDate(" 12th March 2022").lowercase().contains("no notes")
+        )
+    }
+
+    @Test
+    fun `listNotesBySelectedDate returns no notes when no notes of that date exist`() {
+        //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val date2String = populatedNotes!!.listNotesBySelectedDate(" 20th September 2021").lowercase()
+        assertTrue(date2String.contains("no notes for this date"))
+        assertTrue(date2String.contains("20th September 2021"))
+    }
+
+
+    @Test
+    fun `listNotesBySelectedDate returns all notes that match that date when notes of that date exist`() {
+        //Priority 1 (1 note), 2 (none), 3 (1 note). 4 (2 notes), 5 (1 note)
+        assertEquals(5, populatedNotes!!.numberOfNotes())
+        val date1String = populatedNotes!!.listNotesBySelectedDate(" 9th March 2022").lowercase()
+        assertTrue(date1String.contains("2 notes"))
+        assertTrue(date1String.contains("status doing"))
+        assertTrue(date1String.contains("learning kotlin"))
+        assertTrue(date1String.contains("summer holiday to France"))
+
+        assertFalse(date1String.contains("test app"))
+        assertFalse(date1String.contains("code app"))
+        assertFalse(date1String.contains("swim"))
 
     }
 }

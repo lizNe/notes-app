@@ -18,6 +18,12 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.32")
     implementation("com.thoughtworks.xstream:xstream:1.4.18")
     implementation("org.codehaus.jettison:jettison:1.4.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2")
+    implementation("org.yaml:snakeyaml:1.30")
+
+
+
 
 //    Implementation means dependency available in all source sets, including test source sets
 //    testImplementation means dependency only available in test source set
