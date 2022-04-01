@@ -172,26 +172,6 @@ class NoteAPI(serializerType: Serializer) {
         notes.count() { note:Note -> note.noteDate == date}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     fun numberOfNotesByPriority(priority: Int): Int =
         notes.count() { note:Note -> note.notePriority == priority}
 
@@ -212,9 +192,6 @@ class NoteAPI(serializerType: Serializer) {
     fun searchByTitle (searchString : String) =
         formatListString(
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
-
-
-
 
 
     fun isValidIndex(index: Int) :Boolean{
